@@ -125,3 +125,20 @@ jb.component('data-resource.progress', { /* dataResource.progress */
     
   }
 })
+
+
+jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
+    type: 'control',
+    impl: group({
+      controls: [
+        {
+          '$': 'd3g.chart-scatter',
+          title: 'phones',
+          items: '%$devices%',
+          itemTitle: '%name%',
+          frame: {'$': 'd3g.frame', width: 1400, height: 500, top: 30, right: 50, bottom: 40, left: 60},
+          pivots: {'$': 'd3g.pivot', title: 'price', value: '%%[spec-list]'}
+        }
+      ]
+    })
+})
