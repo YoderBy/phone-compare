@@ -120,13 +120,6 @@ jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
 })
 
 
-jb.component('html-parsing.parseDevice', { /* htmlParsing.parseDevice */
-  type: 'control',
-  impl: group({
-
-  })
-})
-
 jb.component('data-resource.progress', { /* dataResource.progress */
   watchableData: {
     
