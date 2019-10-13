@@ -9,10 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "jb-react": "^0.4.20"
-=======
-    "jb-react": "^0.4.19"
->>>>>>> 2abc2ae65cf4c90f8ff79f5494f42ad8f7d67f6f
   }
 }
