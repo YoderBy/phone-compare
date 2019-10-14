@@ -1,4 +1,4 @@
-jb.ns('gsmArena','phone-compare')
+jb.ns('phone-compare')
 
 jb.component('phone-compare.main', { /* htmlParsing.main */
   type: 'control',
@@ -26,12 +26,12 @@ jb.component('phone-compare.main', { /* htmlParsing.main */
     ],
     features: variable({
       name: 'phone',
-      value: pipeline('%$samsung_galaxy_m30s-9818%', gsmArena.deviceParser())
+      value: pipeline('%$samsung_galaxy_m30s-9818%', phoneCompare.deviceParser())
     })
   })
 })
 
-jb.component('gsm-arena.device-parser', { /* gsmArena.deviceParser */
+jb.component('phone-compare.device-parser', { /* phoneCompare.deviceParser */
   impl: pipeline(
     Var('input', '%%'),
     dynamicObject({
@@ -99,7 +99,7 @@ jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
                 '%$devices/{%%}%',
                 pipe(
                   http.get({url: 'https://www.gsmarena.com/%%.php'}),
-                  gsmArena.deviceParser(),
+                  phoneCompare.deviceParser(),
                   first()
                 )
               ),
