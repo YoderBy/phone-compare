@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jb-react": "github:artwaresoft/jb-react"
+    "jb-react": "ArtwareSoft/jb-react"
   }
 }

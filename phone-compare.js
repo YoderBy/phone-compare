@@ -1,4 +1,53 @@
 jb.ns('phone-compare')
+jb.component('data-resource.selected', { /* dataResource.selected */
+  watchableData: {
+    Technology: 'GSM / HSPA / LTE',
+    '2G bands': 'GSM 850 / 900 / 1800 / 1900 - SIM 1 & SIM 2',
+    '3G bands': 'HSDPA 850 / 900 / 1900 / 2100',
+    '4G bands': 'LTE band 1(2100), 2(1900), 3(1800), 4(1700/2100), 5(850), 7(2600), 8(900), 38(2600), 39(1900), 40(2300), 41(2500)',
+    Speed: 'HSPA 42.2/5.76 Mbps, LTE-A (3CA) Cat12 600/150 Mbps',
+    Announced: '2016, October',
+    Status: 'Available. Released 2016, November',
+    Dimensions: '158.8 x 81.9 x 7.9 mm (6.25 x 3.22 x 0.31 in)',
+    Weight: '209 g (7.37 oz)',
+    Build: 'Front glass, ceramic frame, back',
+    SIM: 'Dual SIM (Nano-SIM, dual stand-by)',
+    Type: 'IPS LCD capacitive touchscreen, 16M colors',
+    Size: '6.4 inches, 108.7 cm',
+    Resolution: '1080 x 2040 pixels, 17:9 ratio (~362 ppi density)',
+    OS: 'Android 6.0 (Marshmallow), upgradable to 8.0 (Oreo); MIUI 10',
+    Chipset: 'Qualcomm MSM8996 Snapdragon 821 (14 nm)',
+    CPU: 'Quad-core (2x2.35 GHz Kryo & 2x2.19 GHz Kryo)',
+    GPU: 'Adreno 530',
+    'Card slot': 'No',
+    Internal: '128GB 4GB RAM, 256GB 6GB RAM',
+    Single: '5 MP, f/2.2',
+    Features: 'Dual-LED dual-tone flash, HDR',
+    Video: '1080p@30fps',
+    Loudspeaker: undefined,
+    '3.5mm jack': undefined,
+    'Active noise cancellation with dedicated mic': 'Active noise cancellation with dedicated mic',
+    WLAN: 'Wi-Fi 802.11 a/b/g/n/ac, dual-band, Wi-Fi Direct, hotspot',
+    Bluetooth: '4.2, A2DP, LE',
+    GPS: 'Yes, with A-GPS, GLONASS, BDS',
+    NFC: 'Yes',
+    Radio: 'No',
+    USB: 'Type-C 1.0 reversible connector',
+    Sensors: 'Fingerprint (rear-mounted), accelerometer, gyro, proximity, compass, barometer',
+    'Non-removable Li-Ion 4400 mAh battery': 'Non-removable Li-Ion 4400 mAh battery',
+    Charging: undefined,
+    Colors: 'Black, White',
+    Price: 'About 390 EUR',
+    Performance: '',
+    Display: undefined,
+    Camera: undefined,
+    'Audio quality': undefined,
+    'Battery life': '',
+    name: 'Xiaomi Mi Mix',
+    image: 'https://www.gravatar.com/avatar/2900b88d10e585a546c9ff5140591320?r=g&s=50',
+    battery: 'Non-removable Li-Ion 4400 mAh battery'
+  }
+})
 
 jb.component('phone-compare.main', { /* htmlParsing.main */
   type: 'control',
@@ -210,43 +259,49 @@ jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
       itemlist({
         items: pipeline('%$devices%', properties(), '%val%'),
         controls: [
-          group({
-            style: layout.horizontalFixedSplit({}),
-            controls: [
-              text({title: 'name', text: '%name%'}),
-              text({text: '%Price%'})
-            ]
+          text({title: 'name', text: '%name%', features: field.columnWidth('300')}),
+          text({title: 'price', text: pipeline('%Price%', matchRegex('[0-9]+'))})
+        ],
+        style: table.withHeaders(),
+        visualSizeLimit: '',
+        features: [
+          itemlist.selection({
+            databind: '%$selected%',
+            selectedToDatabind: '%%',
+            databindToSelected: ''
+          }),
+          itemlist.keyboardSelection({}),
+          css.width('600')
+        ]
+      }),
+      group({
+        style: propertySheet.titlesLeft({}),
+        controls: [
+          text({
+            title: 'size',
+            text: split({separator: 'inches', text: '%Size%', part: 'first'})
+          }),
+          text({
+            title: 'weight',
+            text: split({separator: ' ', text: '%Weight%', part: 'first'})
+          }),
+          text({title: 'battery', text: matchRegex('[0-9]+', '%battery%')}),
+          text({
+            title: 'price',
+            text: split({separator: 'out', text: '%Price%', part: 'second'})
+          }),
+          text({
+            title: 'year',
+            text: split({separator: 'sed', text: '%Status%', part: 'second'})
+          }),
+          image({
+            url: '%image%',
+            width: '100',
+            height: '100',
+            features: field.title('image')
           })
         ],
-        style: itemlist.ulLi(),
-        visualSizeLimit: '20',
-        features: itemlist.selection({
-          onSelection: openDialog({
-            style: dialog.contextMenuPopup(undefined, '1000px'),
-            content: group({
-              style: propertySheet.titlesLeft({}),
-              controls: [
-                text({
-                  title: 'size',
-                  text: split({separator: 'inches', text: '%Size%', part: 'first'})
-                }),
-                text({
-                  title: 'weight',
-                  text: split({separator: ' ', text: '%Weight%', part: 'first'})
-                }),
-                text({title: 'battery', text: split({text: '%battery%'})}),
-                text({
-                  title: 'price',
-                  text: split({separator: 'out', text: '%Price%', part: 'second'})
-                }),
-                text({
-                  title: 'year',
-                  text: split({separator: 'sed', text: '%Status%', part: 'second'})
-                })
-              ]
-            })
-          })
-        })
+        features: [group.data('%$selected%'), watchRef('%$selected%')]
       })
     ]
   })
