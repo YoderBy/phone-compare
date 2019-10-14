@@ -66,6 +66,14 @@ jb.component('phone-compare.device-parser', { /* phoneCompare.deviceParser */
               startMarkers: ['<div class=\"specs-photo-main\">', '<a href=\"', 'src=\"'],
               endMarker: '\"'
             })
+          ),
+        prop(
+            'battery',
+            extractText({
+              text: '%$input%',
+              startMarkers: 'batdescription1\">',
+              endMarker: '<'
+            })
           )
       ),
     first()
@@ -81,9 +89,9 @@ jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
       editableText({title: 'search-url', databind: '%$url%'}),
       button({
         title: 'parse make',
-        action: writeValue(
+        action: writeValueAsynch(
           '%$deviceUrls%',
-          pipeline(
+          pipe(
             http.get('%$url%'),
             extractText({startMarkers: 'class=\"makers\"', endMarker: '</ul>'}),
             extractText({startMarkers: '<a href=\"', endMarker: '.php', repeating: 'true'})
@@ -98,7 +106,7 @@ jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
             writeValueAsynch(
                 '%$devices/{%%}%',
                 pipe(
-                  http.get({url: 'https://www.gsmarena.com/%%.php'}),
+                  http.get('https://www.gsmarena.com/%%.php'),
                   phoneCompare.deviceParser(),
                   first()
                 )
@@ -128,7 +136,54 @@ jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
 
 jb.component('data-resource.progress', { /* dataResource.progress */
   watchableData: {
-
+    'xiaomi_redmi_note_8_pro-9812': 'done',
+    'xiaomi_redmi_8-9800': 'done',
+    'samsung_galaxy_m30s-9818': 'done',
+    'samsung_galaxy_a70s-9899': 'done',
+    'samsung_galaxy_a70-9646': 'done',
+    'samsung_galaxy_note10+-9732': 'done',
+    'infinix_hot_8-9856': 'done',
+    'vivo_v17_pro-9849': 'done',
+    'realme_5-9802': 'done',
+    'huawei_p30_pro-9635': 'done',
+    'oppo_a5_(2020)-9883': 'done',
+    'samsung_galaxy_s10+-9535': 'done',
+    'huawei_mate_30_pro-9885': 'done',
+    'asus_rog_phone_ii_zs660kl-9770': 'done',
+    'xiaomi_redmi_8a-9897': 'done',
+    'vivo_s1-9766': 'done',
+    'vivo_z1pro-9743': 'done',
+    'samsung_galaxy_m30-9505': 'done',
+    'realme_3-9558': 'done',
+    'vivo_y12-9729': 'done',
+    'samsung_galaxy_m20-9506': 'done',
+    'vivo_nex_3_5g-9817': 'done',
+    'huawei_mate_30_pro_5g-9880': 'done',
+    'asus_zenfone_6_zs630kl-9698': 'done',
+    'vivo_z1x-9820': 'done',
+    'vivo_y17-9666': 'done',
+    'vivo_u10-9890': 'done',
+    'samsung_galaxy_s10_5g-9588': 'done',
+    'samsung_galaxy_note10+_5g-9787': 'done',
+    'huawei_mate_30-9886': 'done',
+    'vivo_y15-9719': 'done',
+    'motorola_moto_g7_power-9527': 'done',
+    'vivo_nex_3-9873': 'done',
+    'zte_nubia_red_magic_3s-9839': 'done',
+    'zte_nubia_red_magic_3-9692': 'done',
+    'realme_3i-9768': 'done',
+    'huawei_mate_20_x_(5g)-9705': 'done',
+    'huawei_mate_30_5g-9881': 'done',
+    'vivo_iqoo_pro_5g-9794': 'done',
+    'vivo_z5-9782': 'done',
+    'vivo_v17_neo-9783': 'done',
+    'vivo_iqoo_pro-9807': 'done',
+    'energizer_power_max_p8100s-9590': 'done',
+    'vivo_iqoo_neo-9750': 'done',
+    'vivo_z5x-9717': 'done',
+    'realme_c1_(2019)-9539': 'done',
+    'oppo_a7n-9653': 'done',
+    'archos_oxygen_68xl-9594': 'done'
   }
 })
 
@@ -136,41 +191,62 @@ jb.component('data-resource.progress', { /* dataResource.progress */
 jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
   type: 'control',
   impl: group({
+    style: layout.horizontal(),
     controls: [
       text({
         title: 'fix values',
         text: pipeline(
           '%$devices%',
           properties(),
-          wrapAsObject(
-              '%id%',
-              pipeline(
+          wrapAsObject({
+              propertyName: '%id%',
+              value: pipeline(
                 '%val%',
                 assign(prop('Size', split({separator: 'inch', text: '%Size%', part: 'first'})))
               )
-            )
+            })
         )
-      }),
-      d3g.chartScatter({
-        title: 'phones',
-        items: pipeline('%$devices%', properties(), '%val%'),
-        frame: d3g.frame({width: 1400, height: 500, top: 30, right: 50, bottom: 40, left: 60}),
-        pivots: [
-          d3g.pivot({title: 'price', value: '%Price%'}),
-          d3g.pivot({title: 'size', value: '%Size%'})
-        ],
-        itemTitle: '%name%'
       }),
       itemlist({
         items: pipeline('%$devices%', properties(), '%val%'),
         controls: [
-          label('%Price%'),
-          text({
-            title: 'size',
-            text: split({separator: 'inches', text: '%Size%', part: 'first'})
+          group({
+            style: layout.horizontalFixedSplit({}),
+            controls: [
+              text({title: 'name', text: '%name%'}),
+              text({text: '%Price%'})
+            ]
           })
         ],
-        style: table.mdl()
+        style: itemlist.ulLi(),
+        visualSizeLimit: '20',
+        features: itemlist.selection({
+          onSelection: openDialog({
+            style: dialog.contextMenuPopup(undefined, '1000px'),
+            content: group({
+              style: propertySheet.titlesLeft({}),
+              controls: [
+                text({
+                  title: 'size',
+                  text: split({separator: 'inches', text: '%Size%', part: 'first'})
+                }),
+                text({
+                  title: 'weight',
+                  text: split({separator: ' ', text: '%Weight%', part: 'first'})
+                }),
+                text({title: 'battery', text: split({text: '%battery%'})}),
+                text({
+                  title: 'price',
+                  text: split({separator: 'out', text: '%Price%', part: 'second'})
+                }),
+                text({
+                  title: 'year',
+                  text: split({separator: 'sed', text: '%Status%', part: 'second'})
+                })
+              ]
+            })
+          })
+        })
       })
     ]
   })
