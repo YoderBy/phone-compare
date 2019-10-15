@@ -9,25 +9,17 @@ jb.component('phone-compare.main', { /* phoneCompare.main */
       d3g.chartScatter({
         title: 'phones',
         items: '%$fixed-devices%',
-        frame: d3g.frame({
-          width: '1200',
-          height: '480',
-          top: 20,
-          right: 20,
-          bottom: '40',
-          left: '80'
-        }),
+        frame: d3g.frame({width: 1200, height: 480, top: 20, right: 20, bottom: 40, left: 80}),
         pivots: [
+          d3g.pivot({title: 'battery', value: '%battery%'}),
+          d3g.pivot({title: 'size', value: '%size%'}),
           d3g.pivot({title: 'price', value: '%price%'}),
-          d3g.pivot({title: 'weight', value: '%weight%'}),
-          d3g.pivot({title: 'size', value: '%size%'})
+          d3g.pivot({title: 'price', value: '%price%'})
         ],
         itemTitle: '%name%',
         style: d3Scatter.plain()
       })
-    ],
-    
-    })
+    ]
   })
 })
 
