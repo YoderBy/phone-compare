@@ -6,29 +6,27 @@ jb.component('phone-compare.main', { /* phoneCompare.main */
   impl: group({
     title: '',
     controls: [
-      text({text: pipeline(phoneCompare.priceParser(), '%%aaaa')}),
-      itemlist({
-        items: pipeline('%$phone%', keys()),
-        controls: [
-          text({title: 'property', text: '%%', features: field.columnWidth('200')}),
-          text({title: 'value', text: pipeline('%$phone/{%%}%')})
+      d3g.chartScatter({
+        title: 'phones',
+        items: '%$fixed-devices%',
+        frame: d3g.frame({
+          width: '1200',
+          height: '480',
+          top: 20,
+          right: 20,
+          bottom: '40',
+          left: '80'
+        }),
+        pivots: [
+          d3g.pivot({title: 'price', value: '%price%'}),
+          d3g.pivot({title: 'weight', value: '%weight%'}),
+          d3g.pivot({title: 'size', value: '%size%'})
         ],
-        style: table.withHeaders(),
-        features: [css.width('446')]
-      }),
-      itemlist({
-        items: '%$phone/spec-list%',
-        controls: [
-          text({title: 'feature', text: '%feature%'}),
-          text({title: 'value', text: '%val%'})
-        ],
-        style: table.withHeaders(),
-        features: [css.width('400')]
+        itemTitle: '%name%',
+        style: d3Scatter.plain()
       })
     ],
-    features: variable({
-      name: 'phone',
-      value: pipeline('%$samsung_galaxy_m30s-9818%', phoneCompare.deviceParser())
+    
     })
   })
 })
@@ -250,7 +248,7 @@ jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
           text({title: 'price', text: pipeline('%Price%', phoneCompare.priceParser())})
         ],
         style: table.withHeaders(),
-        visualSizeLimit: '',
+        visualSizeLimit: '5',
         features: [
           itemlist.selection({
             databind: '%$selected%',
@@ -286,6 +284,28 @@ jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
           })
         ],
         features: [group.data('%$selected%'), watchRef('%$selected%')]
+      }),
+      button({
+        title: 'create pivots ',
+        action: writeValue(
+          '%$fixed-devices%',
+          pipeline(
+            pipeline(
+                '%$devices%',
+                properties(),
+                pipeline(
+                    '%val%',
+                    obj(
+                        prop('price', pipeline('%Price%', phoneCompare.priceParser())),
+                        prop('battery', matchRegex('[0-9]+', '%battery%')),
+                        prop('size', split({separator: 'inches', text: '%Size%', part: 'first'})),
+                        prop('weight', matchRegex('[0-9]+', '%Weight%')),
+                        prop('name', '%name%')
+                      )
+                  )
+              )
+          )
+        )
       })
     ]
   })
@@ -293,11 +313,6 @@ jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
 
 jb.component('phone-compare.price-parser', { /* phoneCompare.priceParser */
   impl: pipeline(
-    list(
-        '12 eur',
-        '&#36;&thinsp;219.99 / &#163;&thinsp;225.58',
-        '&#163;&thinsp;225.58'
-      ),
     pipeline(
         replace({find: '&#36;&thinsp;', replace: '$'}),
         replace({find: '&#163;&thinsp;', replace: 'eur'}),
@@ -306,17 +321,21 @@ jb.component('phone-compare.price-parser', { /* phoneCompare.priceParser */
     obj(
         prop(
             'cur',
-            pipeline(matchRegex('\\$|EUR|eur|inda|INR'), '%$currency-converter/{%%}%')
+            pipeline(matchRegex('\\$|EUR|eur|inda|INR|USD'), '%$currency-converter/{%%}%')
           ),
-        prop('quantity', pipeline(matchRegex('[0-9]+,[0-9]+|[0-9]+'), first()))
+        prop(
+            'quantity',
+            pipeline(matchRegex('[0-9]+,[0-9]+|[0-9]+'), first(), replace(','))
+          )
       ),
-    '%quantity% *%cur%'
+    (ctx)=>{debugger; return(+ctx.data.cur) * (+ctx.data.quantity)}
   )
 })
 
 jb.component('data-resource.currency-converter', { /* dataResource.currencyConverter */
   passiveData: {
     '$': 3.52,
+    USD: 3.52,
     inda: 0.049,
     INR: 0.049,
     eur: 3.87,

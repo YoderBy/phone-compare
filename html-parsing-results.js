@@ -3576,3 +3576,435 @@ jb.component('data-resource.devices', { /* dataResource.devices */
   }
 })
 
+
+jb.component('data-resource.fixed-devices', { /* dataResource.fixedDevices */
+  passiveData: [
+    {
+      price: '770.88',
+      battery: '4500',
+      size: '6.53 ',
+      weight: '200',
+      name: 'Xiaomi Redmi Note 8 Pro'
+    },
+    {
+      price: '387',
+      battery: '5000',
+      size: '6.22 ',
+      weight: '188',
+      name: 'Xiaomi Redmi 8'
+    },
+    {
+      price: '968',
+      battery: '6000',
+      size: '6.4 ',
+      weight: '188',
+      name: 'Samsung Galaxy M30s'
+    },
+    {
+      price: '1420.951',
+      battery: '4500',
+      size: '6.7 ',
+      weight: '187',
+      name: 'Samsung Galaxy A70s'
+    },
+    {
+      price: '1182.72',
+      battery: '4500',
+      size: '6.7 ',
+      weight: '183',
+      name: 'Samsung Galaxy A70'
+    },
+    {
+      price: '2988.48',
+      battery: '4300',
+      size: '6.8 ',
+      weight: '196',
+      name: 'Samsung Galaxy Note10+'
+    },
+    {
+      price: '440.951',
+      battery: '5000',
+      size: '6.52 ',
+      weight: '179',
+      name: 'Infinix Hot 8'
+    },
+    {
+      price: '1660.23',
+      battery: '4100',
+      size: '6.44 ',
+      weight: '201',
+      name: 'vivo V17 Pro'
+    },
+    {price: '718.08', battery: '5000', size: '6.5 ', weight: '198', name: 'Realme 5'},
+    {
+      price: '1950.08',
+      battery: '4200',
+      size: '6.47 ',
+      weight: '192',
+      name: 'Huawei P30 Pro'
+    },
+    {
+      price: '619.2',
+      battery: '5000',
+      size: '6.5 ',
+      weight: '195',
+      name: 'Oppo A5 (2020)'
+    },
+    {
+      price: '2319.68',
+      battery: '4100',
+      size: '6.4 ',
+      weight: '175',
+      name: 'Samsung Galaxy S10+'
+    },
+    {
+      price: '3227.84',
+      battery: '4500',
+      size: '6.53 ',
+      weight: '198',
+      name: 'Huawei Mate 30 Pro'
+    },
+    {
+      price: '2027.52',
+      battery: '6000',
+      size: '6.59 ',
+      weight: '240',
+      name: 'Asus ROG Phone II ZS660KL'
+    },
+    {
+      price: '337.92',
+      battery: '5000',
+      size: '6.2 ',
+      weight: '188',
+      name: 'Xiaomi Redmi 8A'
+    },
+    {
+      price: '1158.08',
+      battery: '5000',
+      size: '6.53 ',
+      weight: '201',
+      name: 'vivo Z1Pro'
+    },
+    {
+      price: '739.2',
+      battery: '5000',
+      size: '6.4 ',
+      weight: '174',
+      name: 'Samsung Galaxy M30'
+    },
+    {price: '478.72', battery: '4230', size: '6.22 ', weight: '175', name: 'Realme 3'},
+    {price: '538.51', battery: '5000', size: '6.35 ', weight: '190', name: 'vivo Y12'},
+    {
+      price: '594.88',
+      battery: '5000',
+      size: '6.3 ',
+      weight: '186',
+      name: 'Samsung Galaxy M20'
+    },
+    {
+      price: '2625.92',
+      battery: '4500',
+      size: '6.89 ',
+      weight: '218',
+      name: 'vivo NEX 3 5G'
+    },
+    {
+      price: '3483',
+      battery: '4500',
+      size: '6.53 ',
+      weight: '198',
+      name: 'Huawei Mate 30 Pro 5G'
+    },
+    {
+      price: '1756.48',
+      battery: '5000',
+      size: '6.4 ',
+      weight: '190',
+      name: 'Asus Zenfone 6 ZS630KL'
+    },
+    {price: '1228.48', battery: '4500', size: '6.38 ', weight: '190', name: 'vivo Z1x'},
+    {price: '876.48', battery: '5000', size: '6.35 ', weight: '190', name: 'vivo Y17'},
+    {price: '665.28', battery: '5000', size: '6.35 ', weight: '190', name: 'vivo U10'},
+    {
+      price: '3481.28',
+      battery: '4500',
+      size: '6.7 ',
+      weight: '198',
+      name: 'Samsung Galaxy S10 5G'
+    },
+    {
+      price: '3287.68',
+      battery: '4300',
+      size: '6.8 ',
+      weight: '198',
+      name: 'Samsung Galaxy Note10+ 5G'
+    },
+    {
+      price: '2302.08',
+      battery: '4200',
+      size: '6.62 ',
+      weight: '196',
+      name: 'Huawei Mate 30'
+    },
+    {price: '696.6', battery: '5000', size: '6.35 ', weight: '190', name: 'vivo Y15'},
+    {
+      price: '577.28',
+      battery: '5000',
+      size: '6.2 ',
+      weight: '193',
+      name: 'Motorola Moto G7 Power'
+    },
+    {price: '2476.8', battery: '4500', size: '6.89 ', weight: '217', name: 'vivo NEX 3'},
+    {
+      price: '1935',
+      battery: '5000',
+      size: '6.65 ',
+      weight: '215',
+      name: 'ZTE nubia Red Magic 3s'
+    },
+    {
+      price: '1935',
+      battery: '5000',
+      size: '6.65 ',
+      weight: '215',
+      name: 'ZTE nubia Red Magic 3'
+    },
+    {price: '392', battery: '4230', size: '6.2 ', weight: '175', name: 'Realme 3i'},
+    {
+      price: '3483',
+      battery: '4200',
+      size: '7.2 ',
+      weight: '233',
+      name: 'Huawei Mate 20 X (5G)'
+    },
+    {
+      price: '2515.5',
+      battery: '4200',
+      size: '6.62 ',
+      weight: '196',
+      name: 'Huawei Mate 30 5G'
+    },
+    {
+      price: '1935',
+      battery: '4500',
+      size: '6.41 ',
+      weight: '217',
+      name: 'vivo iQOO Pro 5G'
+    },
+    {price: '812.7', battery: '4500', size: '6.38 ', weight: '187', name: 'vivo Z5'},
+    {
+      price: '1083.6000000000001',
+      battery: '4500',
+      size: '6.38 ',
+      weight: '179',
+      name: 'vivo V17 Neo'
+    },
+    {
+      price: '1586.7',
+      battery: '4500',
+      size: '6.41 ',
+      weight: '215',
+      name: 'vivo iQOO Pro'
+    },
+    {
+      price: '3483',
+      battery: '10',
+      size: '8.1 ',
+      weight: '',
+      name: 'Energizer Power Max P8100S'
+    },
+    {
+      price: '967.5',
+      battery: '4500',
+      size: '6.38 ',
+      weight: '198',
+      name: 'vivo iQOO Neo'
+    },
+    {price: '774', battery: '5000', size: '6.53 ', weight: '204', name: 'vivo Z5x'},
+    {
+      price: '367.5',
+      battery: '4230',
+      size: '6.2 ',
+      weight: '168',
+      name: 'Realme C1 (2019)'
+    },
+    {price: '774', battery: '4230', size: '6.2 ', weight: '170', name: 'Oppo A7n'},
+    {
+      price: '580.5',
+      battery: '5000',
+      size: '6.85 ',
+      weight: '214',
+      name: 'Archos Oxygen 68XL'
+    },
+    {
+      price: '580.5',
+      battery: '4850',
+      size: '6.44 ',
+      weight: '203',
+      name: 'Xiaomi Mi Max'
+    },
+    {
+      price: '1509.3',
+      battery: '4400',
+      size: '6.4 ',
+      weight: '209',
+      name: 'Xiaomi Mi Mix'
+    },
+    {
+      price: '1238.4',
+      battery: '4000',
+      size: '5.9 ',
+      weight: '190',
+      name: 'Huawei Mate 9'
+    },
+    {
+      price: '1354.5',
+      battery: '4050',
+      size: '6.4 ',
+      weight: '259',
+      name: 'Lenovo Phab2 Pro'
+    },
+    {
+      price: '1044.9',
+      battery: '4100',
+      size: '6.0 ',
+      weight: '189',
+      name: 'Meizu M3 Max'
+    },
+    {
+      price: '1087.68',
+      battery: '4000',
+      size: '5.9 ',
+      weight: '186',
+      name: 'Huawei Mate 10'
+    },
+    {
+      price: '936.32',
+      battery: '4000',
+      size: '6.18 ',
+      weight: '182',
+      name: 'Xiaomi Pocophone F1'
+    },
+    {
+      price: '2192.96',
+      battery: '4000',
+      size: '6.4 ',
+      weight: '201',
+      name: 'Samsung Galaxy Note9'
+    },
+    {
+      price: '1756.48',
+      battery: '4200',
+      size: '6.39 ',
+      weight: '189',
+      name: 'Huawei Mate 20 Pro'
+    },
+    {
+      price: '471.68',
+      battery: '4000',
+      size: '5.84 ',
+      weight: '178',
+      name: 'Xiaomi Mi A2 Lite (Redmi 6 Pro)'
+    },
+    {
+      price: '454.08',
+      battery: '4000',
+      size: '6.26 ',
+      weight: '182',
+      name: 'Xiaomi Redmi Note 6 Pro'
+    },
+    {
+      price: '1580.48',
+      battery: '4000',
+      size: '6.1 ',
+      weight: '180',
+      name: 'Huawei P20 Pro'
+    },
+    {
+      price: '1470.6000000000001',
+      battery: '4000',
+      size: '6.53 ',
+      weight: '188',
+      name: 'Huawei Mate 20'
+    },
+    {
+      price: '468.16',
+      battery: '4000',
+      size: '5.99 ',
+      weight: '180',
+      name: 'Xiaomi Redmi 5 Plus (Redmi Note 5)'
+    },
+    {
+      price: '1586.7',
+      battery: '4000',
+      size: '6.4 ',
+      weight: '180',
+      name: 'Honor View 20'
+    },
+    {
+      price: '556.16',
+      battery: '5500',
+      size: '6.9 ',
+      weight: '221',
+      name: 'Xiaomi Mi Max 3'
+    },
+    {
+      price: '1548',
+      battery: '4000',
+      size: '6.0 ',
+      weight: '178',
+      name: 'Huawei Mate 10 Pro'
+    },
+    {
+      price: '2244.6',
+      battery: '5000',
+      size: '7.2 ',
+      weight: '232',
+      name: 'Huawei Mate 20 X'
+    },
+    {
+      price: '3096',
+      battery: '4000',
+      size: '6.0 ',
+      weight: '200',
+      name: 'Asus ROG Phone ZS600KL'
+    },
+    {
+      price: '464.40000000000003',
+      battery: '4230',
+      size: '6.2 ',
+      weight: '168',
+      name: 'Realme 2'
+    },
+    {
+      price: '696.6',
+      battery: '4000',
+      size: '5.99 ',
+      weight: '181',
+      name: 'Xiaomi Redmi Note 5 AI Dual Camera'
+    },
+    {
+      price: '774',
+      battery: '5300',
+      size: '6.44 ',
+      weight: '211',
+      name: 'Xiaomi Mi Max 2'
+    },
+    {
+      price: '2992',
+      battery: '4000',
+      size: '5.8 ',
+      weight: '208',
+      name: 'Samsung Galaxy S8 Active'
+    },
+    {
+      price: '1857.6000000000001',
+      battery: '4000',
+      size: '6.0 ',
+      weight: '185',
+      name: 'Oppo F3 Plus'
+    },
+    {price: '2709', battery: '4000', size: '6.59 ', weight: '199', name: 'vivo NEX S'}
+  ]
+})
+
