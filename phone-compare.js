@@ -1,4 +1,331 @@
 jb.ns('phone-compare')
+
+
+jb.component('phone-compare.main', { /* phoneCompare.main */
+  type: 'control',
+  impl: group({
+    title: '',
+    controls: [
+      text({text: pipeline(phoneCompare.priceParser(), '%%aaaa')}),
+      itemlist({
+        items: pipeline('%$phone%', keys()),
+        controls: [
+          text({title: 'property', text: '%%', features: field.columnWidth('200')}),
+          text({title: 'value', text: pipeline('%$phone/{%%}%')})
+        ],
+        style: table.withHeaders(),
+        features: [css.width('446')]
+      }),
+      itemlist({
+        items: '%$phone/spec-list%',
+        controls: [
+          text({title: 'feature', text: '%feature%'}),
+          text({title: 'value', text: '%val%'})
+        ],
+        style: table.withHeaders(),
+        features: [css.width('400')]
+      })
+    ],
+    features: variable({
+      name: 'phone',
+      value: pipeline('%$samsung_galaxy_m30s-9818%', phoneCompare.deviceParser())
+    })
+  })
+})
+
+jb.component('phone-compare.device-parser', { /* phoneCompare.deviceParser */
+  impl: pipeline(
+    Var('input', '%%'),
+    dynamicObject({
+        items: pipeline(
+          extractText({
+              startMarkers: ['id=\"specs-list'],
+              endMarker: 'class=\"note\"',
+              repeating: 'true'
+            }),
+          extractText({
+              startMarkers: 'class=\"ttl\">',
+              endMarker: '</tr>',
+              repeating: 'true'
+            })
+        ),
+        propertyName: extractText({startMarkers: '\">', endMarker: '<'}),
+        value: firstSucceeding(
+          extractText({startMarkers: ['<td', '>'], endMarker: '<'}),
+          pipeline(
+              extractText({startMarkers: list('<a', '>'), endMarker: '<', repeating: 'true'}),
+              reverse(),
+              first()
+            )
+        )
+      }),
+    assign(
+        prop(
+            'name',
+            extractText({
+              text: '%$input%',
+              startMarkers: '<h1 class=\"specs-phone-name-title\" data-spec=\"modelname\">',
+              endMarker: '</h1>'
+            })
+          ),
+        prop(
+            'image',
+            extractText({
+              text: '%$input%',
+              startMarkers: ['<div class=\"specs-photo-main\">', '<a href=\"', 'src=\"'],
+              endMarker: '\"'
+            })
+          ),
+        prop(
+            'battery',
+            extractText({
+              text: '%$input%',
+              startMarkers: 'batdescription1\">',
+              endMarker: '<'
+            })
+          )
+      ),
+    first()
+  )
+})
+
+
+
+jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
+  type: 'control',
+  impl: group({
+    controls: [
+      button({
+        title: 'parser check',
+        action: writeValue(undefined, pipeline('%$phone-page%', phoneCompare.deviceParser()))
+      }),
+      editableText({title: 'search-url', databind: '%$url%'}),
+      group({
+        style: layout.horizontal(),
+        controls: [
+          button({
+            title: 'parse-one-url',
+            action: writeValueAsynch(
+              '%$deviceUrls%',
+              pipe(
+                http.get('%$url%'),
+                extractText({startMarkers: 'class=\"makers\"', endMarker: '</ul>'}),
+                extractText({startMarkers: '<a href=\"', endMarker: '.php', repeating: 'true'})
+              )
+            )
+          }),
+          button({
+            title: 'crawl - devices url - parse device - store in results',
+            action: runActionOnItems(
+              pipeline('%$deviceUrls%', slice('', '')),
+              runActions(
+                writeValue('%$progress/{%%}%', 'running'),
+                writeValueAsynch(
+                    '%$devices/{%%}%',
+                    pipe(
+                      http.get('https://www.gsmarena.com/%%.php'),
+                      phoneCompare.deviceParser(),
+                      first()
+                    )
+                  ),
+                writeValue('%$progress/{%%}%', 'done'),
+                refreshControlById('url-list')
+              )
+            )
+          })
+        ]
+      }),
+      button({
+        title: 'parse urls from start to finish ',
+        action: runActionOnItems(
+          pipeline(
+            range('6', '9'),
+            replace({find: '{}', replace: '%%', text: '%$template-url%'})
+          ),
+          runActions(
+            writeValueAsynch(
+                '%$deviceUrls%',
+                pipe(
+                  http.get('%$url%'),
+                  extractText({startMarkers: 'class=\"makers\"', endMarker: '</ul>'}),
+                  extractText({startMarkers: '<a href=\"', endMarker: '.php', repeating: 'true'})
+                )
+              ),
+            refreshControlById('url-list'),
+            runActionOnItems(
+                pipeline('%$deviceUrls%', slice('0', '10')),
+                runActions(
+                  writeValue('%$progress/{%%}%', 'running'),
+                  writeValueAsynch(
+                      '%$devices/{%%}%',
+                      pipe(
+                        http.get('https://www.gsmarena.com/%%.php'),
+                        phoneCompare.deviceParser(),
+                        first()
+                      )
+                    ),
+                  writeValue('%$progress/{%%}%', 'done')
+                )
+              )
+          )
+        )
+      }),
+      itemlist({
+        items: '%$deviceUrls%',
+        controls: [
+          text({title: 'url', text: '%%'}),
+          text({
+            title: 'status',
+            text: pipeline('%$progress/{%%}%'),
+            features: field.columnWidth('100')
+          })
+        ],
+        style: table.mdl(),
+        visualSizeLimit: '',
+        features: [
+          css.width('600'),
+          watchRef({ref: '%$progress%', includeChildren: 'yes'}),
+          id('url-list')
+        ]
+      })
+    ]
+  })
+})
+
+
+jb.component('data-resource.progress', { /* dataResource.progress */
+  watchableData: {
+    'xiaomi_mi_max-8057': 'done',
+    'xiaomi_mi_mix-8400': 'done',
+    'huawei_mate_9-8073': 'done',
+    'lenovo_phab2_pro-8145': 'done',
+    'meizu_m3_max-8321': 'done',
+    'huawei_mate_10-8877': 'done',
+    'xiaomi_pocophone_f1-9293': 'done',
+    'samsung_galaxy_note9-9163': 'done',
+    'huawei_mate_20_pro-9343': 'done',
+    'xiaomi_mi_a2_lite_(redmi_6_pro)-9247': 'done',
+    'xiaomi_redmi_note_6_pro-9333': 'done',
+    'huawei_p20_pro-9106': 'done',
+    'huawei_mate_20-9367': 'done',
+    'xiaomi_redmi_5_plus_(redmi_note_5)-8959': 'done',
+    'honor_view_20-9468': 'done',
+    'xiaomi_mi_max_3-8963': 'done',
+    'huawei_mate_10_pro-8854': 'done',
+    'huawei_mate_20_x-9369': 'done',
+    'asus_rog_phone_zs600kl-9224': 'done',
+    'realme_2-9299': 'done',
+    'xiaomi_redmi_note_5_ai_dual_camera-9120': 'done',
+    'xiaomi_mi_max_2-8582': 'done',
+    'samsung_galaxy_s8_active-8676': 'done',
+    'oppo_f3_plus-8613': 'done',
+    'vivo_nex_s-9227': 'done'
+  }
+})
+
+
+jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
+  type: 'control',
+  impl: group({
+    style: layout.horizontal(),
+    controls: [
+      text({
+        title: 'fix values',
+        text: pipeline(
+          '%$devices%',
+          properties(),
+          wrapAsObject({
+              propertyName: '%id%',
+              value: pipeline(
+                '%val%',
+                assign(prop('Size', split({separator: 'inch', text: '%Size%', part: 'first'})))
+              )
+            })
+        )
+      }),
+      itemlist({
+        items: pipeline('%$devices%', properties(), '%val%'),
+        controls: [
+          text({title: 'name', text: '%name%', features: field.columnWidth('300')}),
+          text({title: 'price', text: pipeline('%Price%', phoneCompare.priceParser())})
+        ],
+        style: table.withHeaders(),
+        visualSizeLimit: '',
+        features: [
+          itemlist.selection({
+            databind: '%$selected%',
+            selectedToDatabind: '%%',
+            databindToSelected: ''
+          }),
+          itemlist.keyboardSelection({}),
+          css.width('600')
+        ]
+      }),
+      group({
+        style: propertySheet.titlesLeft({}),
+        controls: [
+          text({
+            title: 'size',
+            text: split({separator: 'inches', text: '%Size%', part: 'first'})
+          }),
+          text({
+            title: 'weight',
+            text: split({separator: ' ', text: '%Weight%', part: 'first'})
+          }),
+          text({title: 'battery', text: matchRegex('[0-9]+', '%battery%')}),
+          text({title: 'price', text: pipeline('%Price%', phoneCompare.priceParser())}),
+          text({
+            title: 'year',
+            text: split({separator: 'sed', text: '%Status%', part: 'second'})
+          }),
+          image({
+            url: '%image%',
+            width: '100',
+            height: '100',
+            features: field.title('image')
+          })
+        ],
+        features: [group.data('%$selected%'), watchRef('%$selected%')]
+      })
+    ]
+  })
+})
+
+jb.component('phone-compare.price-parser', { /* phoneCompare.priceParser */
+  impl: pipeline(
+    list(
+        '12 eur',
+        '&#36;&thinsp;219.99 / &#163;&thinsp;225.58',
+        '&#163;&thinsp;225.58'
+      ),
+    pipeline(
+        replace({find: '&#36;&thinsp;', replace: '$'}),
+        replace({find: '&#163;&thinsp;', replace: 'eur'}),
+        replace({find: '&#8377;&thinsp;', replace: 'inda'})
+      ),
+    obj(
+        prop(
+            'cur',
+            pipeline(matchRegex('\\$|EUR|eur|inda|INR'), '%$currency-converter/{%%}%')
+          ),
+        prop('quantity', pipeline(matchRegex('[0-9]+,[0-9]+|[0-9]+'), first()))
+      ),
+    '%quantity% *%cur%'
+  )
+})
+
+jb.component('data-resource.currency-converter', { /* dataResource.currencyConverter */
+  passiveData: {
+    '$': 3.52,
+    inda: 0.049,
+    INR: 0.049,
+    eur: 3.87,
+    EUR: 3.87,
+    DOLLAR: 3.52,
+    DOLLARS: 3.52
+  }
+})
+
 jb.component('data-resource.selected', { /* dataResource.selected */
   watchableData: {
     Technology: 'GSM / HSPA / LTE',
@@ -47,262 +374,4 @@ jb.component('data-resource.selected', { /* dataResource.selected */
     image: 'https://www.gravatar.com/avatar/2900b88d10e585a546c9ff5140591320?r=g&s=50',
     battery: 'Non-removable Li-Ion 4400 mAh battery'
   }
-})
-
-jb.component('phone-compare.main', { /* htmlParsing.main */
-  type: 'control',
-  impl: group({
-    title: '',
-    controls: [
-      itemlist({
-        items: pipeline('%$phone%', keys()),
-        controls: [
-          text({title: 'property', text: '%%', features: field.columnWidth('200')}),
-          text({title: 'value', text: pipeline('%$phone/{%%}%')})
-        ],
-        style: table.withHeaders(),
-        features: [css.width('446')]
-      }),
-      itemlist({
-        items: '%$phone/spec-list%',
-        controls: [
-          text({title: 'feature', text: '%feature%'}),
-          text({title: 'value', text: '%val%'})
-        ],
-        style: table.withHeaders(),
-        features: [css.width('400')]
-      })
-    ],
-    features: variable({
-      name: 'phone',
-      value: pipeline('%$samsung_galaxy_m30s-9818%', phoneCompare.deviceParser())
-    })
-  })
-})
-
-jb.component('phone-compare.device-parser', { /* phoneCompare.deviceParser */
-  impl: pipeline(
-    Var('input', '%%'),
-    dynamicObject({
-        items: pipeline(
-          extractText({
-              startMarkers: ['id=\"specs-list'],
-              endMarker: 'class=\"note\"',
-              repeating: 'true'
-            }),
-          extractText({
-              startMarkers: 'class=\"ttl\">',
-              endMarker: '</tr>',
-              repeating: 'true'
-            })
-        ),
-        propertyName: extractText({startMarkers: '\">', endMarker: '<'}),
-        value: extractText({startMarkers: ['data-spec=', '\">'], endMarker: '<'})
-      }),
-    assign(
-        prop(
-            'name',
-            extractText({
-              text: '%$input%',
-              startMarkers: '<h1 class=\"specs-phone-name-title\" data-spec=\"modelname\">',
-              endMarker: '</h1>'
-            })
-          ),
-        prop(
-            'image',
-            extractText({
-              text: '%$input%',
-              startMarkers: ['<div class=\"specs-photo-main\">', '<a href=\"', 'src=\"'],
-              endMarker: '\"'
-            })
-          ),
-        prop(
-            'battery',
-            extractText({
-              text: '%$input%',
-              startMarkers: 'batdescription1\">',
-              endMarker: '<'
-            })
-          )
-      ),
-    first()
-  )
-})
-
-
-
-jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
-  type: 'control',
-  impl: group({
-    controls: [
-      editableText({title: 'search-url', databind: '%$url%'}),
-      button({
-        title: 'parse make',
-        action: writeValueAsynch(
-          '%$deviceUrls%',
-          pipe(
-            http.get('%$url%'),
-            extractText({startMarkers: 'class=\"makers\"', endMarker: '</ul>'}),
-            extractText({startMarkers: '<a href=\"', endMarker: '.php', repeating: 'true'})
-          )
-        )
-      }),
-      button({
-        title: 'crawl - devices url - parse device - store in results',
-        action: runActionOnItems(
-          pipeline('%$deviceUrls%', slice('0', '10')),
-          runActions(
-            writeValueAsynch(
-                '%$devices/{%%}%',
-                pipe(
-                  http.get('https://www.gsmarena.com/%%.php'),
-                  phoneCompare.deviceParser(),
-                  first()
-                )
-              ),
-            writeValue('%$progress/{%%}%', 'done')
-          )
-        )
-      }),
-      itemlist({
-        items: '%$deviceUrls%',
-        controls: [
-          text({title: 'url', text: '%%'}),
-          text({
-            title: 'status',
-            text: pipeline('%$progress/{%%}%'),
-            features: field.columnWidth('100')
-          })
-        ],
-        style: table.mdl(),
-        visualSizeLimit: '4',
-        features: [css.width('600'), watchRef({ref: '%$progress%', includeChildren: 'yes'})]
-      })
-    ]
-  })
-})
-
-
-jb.component('data-resource.progress', { /* dataResource.progress */
-  watchableData: {
-    'xiaomi_redmi_note_8_pro-9812': 'done',
-    'xiaomi_redmi_8-9800': 'done',
-    'samsung_galaxy_m30s-9818': 'done',
-    'samsung_galaxy_a70s-9899': 'done',
-    'samsung_galaxy_a70-9646': 'done',
-    'samsung_galaxy_note10+-9732': 'done',
-    'infinix_hot_8-9856': 'done',
-    'vivo_v17_pro-9849': 'done',
-    'realme_5-9802': 'done',
-    'huawei_p30_pro-9635': 'done',
-    'oppo_a5_(2020)-9883': 'done',
-    'samsung_galaxy_s10+-9535': 'done',
-    'huawei_mate_30_pro-9885': 'done',
-    'asus_rog_phone_ii_zs660kl-9770': 'done',
-    'xiaomi_redmi_8a-9897': 'done',
-    'vivo_s1-9766': 'done',
-    'vivo_z1pro-9743': 'done',
-    'samsung_galaxy_m30-9505': 'done',
-    'realme_3-9558': 'done',
-    'vivo_y12-9729': 'done',
-    'samsung_galaxy_m20-9506': 'done',
-    'vivo_nex_3_5g-9817': 'done',
-    'huawei_mate_30_pro_5g-9880': 'done',
-    'asus_zenfone_6_zs630kl-9698': 'done',
-    'vivo_z1x-9820': 'done',
-    'vivo_y17-9666': 'done',
-    'vivo_u10-9890': 'done',
-    'samsung_galaxy_s10_5g-9588': 'done',
-    'samsung_galaxy_note10+_5g-9787': 'done',
-    'huawei_mate_30-9886': 'done',
-    'vivo_y15-9719': 'done',
-    'motorola_moto_g7_power-9527': 'done',
-    'vivo_nex_3-9873': 'done',
-    'zte_nubia_red_magic_3s-9839': 'done',
-    'zte_nubia_red_magic_3-9692': 'done',
-    'realme_3i-9768': 'done',
-    'huawei_mate_20_x_(5g)-9705': 'done',
-    'huawei_mate_30_5g-9881': 'done',
-    'vivo_iqoo_pro_5g-9794': 'done',
-    'vivo_z5-9782': 'done',
-    'vivo_v17_neo-9783': 'done',
-    'vivo_iqoo_pro-9807': 'done',
-    'energizer_power_max_p8100s-9590': 'done',
-    'vivo_iqoo_neo-9750': 'done',
-    'vivo_z5x-9717': 'done',
-    'realme_c1_(2019)-9539': 'done',
-    'oppo_a7n-9653': 'done',
-    'archos_oxygen_68xl-9594': 'done'
-  }
-})
-
-
-jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
-  type: 'control',
-  impl: group({
-    style: layout.horizontal(),
-    controls: [
-      text({
-        title: 'fix values',
-        text: pipeline(
-          '%$devices%',
-          properties(),
-          wrapAsObject({
-              propertyName: '%id%',
-              value: pipeline(
-                '%val%',
-                assign(prop('Size', split({separator: 'inch', text: '%Size%', part: 'first'})))
-              )
-            })
-        )
-      }),
-      itemlist({
-        items: pipeline('%$devices%', properties(), '%val%'),
-        controls: [
-          text({title: 'name', text: '%name%', features: field.columnWidth('300')}),
-          text({title: 'price', text: pipeline('%Price%', matchRegex('[0-9]+'))})
-        ],
-        style: table.withHeaders(),
-        visualSizeLimit: '',
-        features: [
-          itemlist.selection({
-            databind: '%$selected%',
-            selectedToDatabind: '%%',
-            databindToSelected: ''
-          }),
-          itemlist.keyboardSelection({}),
-          css.width('600')
-        ]
-      }),
-      group({
-        style: propertySheet.titlesLeft({}),
-        controls: [
-          text({
-            title: 'size',
-            text: split({separator: 'inches', text: '%Size%', part: 'first'})
-          }),
-          text({
-            title: 'weight',
-            text: split({separator: ' ', text: '%Weight%', part: 'first'})
-          }),
-          text({title: 'battery', text: matchRegex('[0-9]+', '%battery%')}),
-          text({
-            title: 'price',
-            text: split({separator: 'out', text: '%Price%', part: 'second'})
-          }),
-          text({
-            title: 'year',
-            text: split({separator: 'sed', text: '%Status%', part: 'second'})
-          }),
-          image({
-            url: '%image%',
-            width: '100',
-            height: '100',
-            features: field.title('image')
-          })
-        ],
-        features: [group.data('%$selected%'), watchRef('%$selected%')]
-      })
-    ]
-  })
 })
