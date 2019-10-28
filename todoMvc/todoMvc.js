@@ -4,7 +4,7 @@ jb.component('todoMvc.main', { /* todoMvc.main */
   type: 'control',
   impl: group({
     controls: [
-      button('my button'),
+      button({title: 'my button', action: addToArray('%$todo%', '%$new-task%')}),
       itemlist({
         title: 'todo-list',
         items: '%$todo%',
@@ -34,7 +34,12 @@ jb.component('todoMvc.main', { /* todoMvc.main */
 
 jb.component('data-resource.todo', { /* dataResource.todo */
   watchableData: [
-    {task: 'eat', completed: false},
-    {task: 'drink', completed: true}
+    {task: 'eat', completed: false}
+  ]
+})
+
+jb.component('data-resource.new-task', { /* dataResource.newTask */
+  watchableData: [
+    {task: 'eat', completed: false}
   ]
 })
