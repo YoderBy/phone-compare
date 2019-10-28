@@ -79,6 +79,61 @@ jb.component('phone-compare.device-parser', { /* phoneCompare.deviceParser */
   )
 })
 
+jb.component('phone-compare.facebook-parser', {
+  impl: pipeline(
+    Var('input', '%%'),
+    dynamicObject({
+        items: pipeline(
+          extractText({
+              startMarkers: ['id=\"specs-list'],
+              endMarker: 'class=\"note\"',
+              repeating: 'true'
+            }),
+          extractText({
+              startMarkers: 'class=\"ttl\">',
+              endMarker: '</tr>',
+              repeating: 'true'
+            })
+        ),
+        propertyName: extractText({startMarkers: '\">', endMarker: '<'}),
+        value: firstSucceeding(
+          extractText({startMarkers: ['<td', '>'], endMarker: '<'}),
+          pipeline(
+              extractText({startMarkers: list('<a', '>'), endMarker: '<', repeating: 'true'}),
+              reverse(),
+              first()
+            )
+        )
+      }),
+    assign(
+        prop(
+            'name',
+            extractText({
+              text: '%$input%',
+              startMarkers: '<h1 class=\"specs-phone-name-title\" data-spec=\"modelname\">',
+              endMarker: '</h1>'
+            })
+          ),
+        prop(
+            'image',
+            extractText({
+              text: '%$input%',
+              startMarkers: ['<div class=\"specs-photo-main\">', '<a href=\"', 'src=\"'],
+              endMarker: '\"'
+            })
+          ),
+        prop(
+            'battery',
+            extractText({
+              text: '%$input%',
+              startMarkers: 'batdescription1\">',
+              endMarker: '<'
+            })
+          )
+      ),
+    first()
+  )
+})
 
 
 jb.component('phone-compare.makeToDevices', { /* phoneCompare.makeToDevices */
@@ -305,22 +360,7 @@ jb.component('phone-compare.data-compare', { /* phoneCompare.dataCompare */
 
 jb.component('phone-compare.price-parser', { /* phoneCompare.priceParser */
   impl: pipeline(
-    pipeline(
-        replace({find: '&#36;&thinsp;', replace: '$'}),
-        replace({find: '&#163;&thinsp;', replace: 'eur'}),
-        replace({find: '&#8377;&thinsp;', replace: 'inda'})
-      ),
-    obj(
-        prop(
-            'cur',
-            pipeline(matchRegex('\\$|EUR|eur|inda|INR|USD'), '%$currency-converter/{%%}%')
-          ),
-        prop(
-            'quantity',
-            pipeline(matchRegex('[0-9]+,[0-9]+|[0-9]+'), first(), replace(','))
-          )
-      ),
-    (ctx)=>{debugger; return(+ctx.data.cur) * (+ctx.data.quantity)}
+    '%%'
   )
 })
 
@@ -386,3 +426,16 @@ jb.component('data-resource.selected', { /* dataResource.selected */
     battery: 'Non-removable Li-Ion 4400 mAh battery'
   }
 })
+
+jb.component('phone-compare.facebook', { /* phoneCompare.facebook */
+  type: 'control',
+  impl: group({
+    controls: [
+      button({
+        title: 'click me',
+        action: runActionOnItems(pipeline('%$Gantz%', phoneCompare.facebookParser()))
+      })
+    ]
+  })
+})
+
