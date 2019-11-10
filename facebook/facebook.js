@@ -5,7 +5,6 @@ jb.component('facebook.main', { /* facebook.main */
   impl: group({
     controls: [
       group({
-        style: layout.flex('center'),
         controls: [
           group({
             style: layout.flex({alignItems: 'center', spacing: '20'}),
@@ -93,6 +92,10 @@ jb.component('facebook.main', { /* facebook.main */
                     pipeline(facebook.postParser(), extend(prop('likes')))
                   )
                 )
+              }),
+              button({
+                title: 'click me',
+                action: runActionOnItems('%$table%', writeValue('%isShown%', false))
               })
             ]
           }),
@@ -171,7 +174,7 @@ jb.component('data-resource.post', { /* dataResource.post */
 jb.component('data-resource.table', { /* dataResource.table */
   watchableData: [
     {
-      'post-text': 'ספר להורדה בעברית:<br /> אני יודע שיש פה הרבה שחיכו לזה, והנה [תודה לאל] זה הגיע, הספר שלי על הסקווט ואימון פלג גוף תחתון, כ300 עמודים, ובעברית. <br /> כהרגלי, הספר בחינם ולהורדה חופשית.<br /> הספר הוא מיקס של נושאים כתבות ופוסטים שלי מהעבר שנערכו לצורת ספר, חלקם יראו איך ההבנה שלי כמאמן משתנה עם השנים.</p><p> לצערי לא הייתה לי היכולת לסדר ולערוך את הכל וחלק מהספר כתוב  איפשהוא בין שפה גבוה לקפיצה בין תכנים שונים, [בסופו של דבר גם אני אדם עסוק ולא סופר במשרה מלאה]</p><p> אבל אני חוזר על ההצהרה המקורית שלי: מאמן צעיר שישב ויקרא בעיון את החומר שבספר הזה, שבאמת ירד לעומק של ההבנה של הדברים ויצפה בסרטונים המצורפים, יזרק ביכולת הדרכה שלו שנות אור קדימה. <br /> אתה יכול להיות המאמן האישי הטוב ביותר במכון שלך או בדרך לשם אם באמת תרד לדקויות של התכנים פה.<br /> ובשביל זה בדיוק הדף הזה הוקם, לעזור למאמנים מתחילים.<br />  אני מסתכל על מאמני כושר אישיים בתור חוד החנית של הרפואה המונעת, בתור שליחות-לא רק מקצוע, והתרומה הקטנה שלי לקהילה היא דרך הדף הזה. <br /> קפצו לחנות הדפסה צלמו וכרכו את הספר, יעלה באזור ה100 שקלים. קראו,מרקרו, רשמו לכם נקודות, צפו בסרטונים , קראו שוב ותתנסו. אתם תהיו מאמנים ברמת הבנה ויכולת אחרת כשתסיימו לקרוא אותו.<br /> קישור להורדת הספר בתמונה הראשונה.<br /> בתמונה המצורפת הספר מודפס מסומן בחץ אדום, יחד עם הערמה המפלצתית של מאמרים לקריאה שמונחת לי כרגע על הש��לחן....</p></div>',
+      'post-text': 'ספר להורדה בעברית:<br /> אני יודע שיש פה הרבה שחיכו לזה, והנה [תודה לאל] זה הגיע, הספר שלי על הסקווט ואימון פלג גוף תחתון, כ300 עמודים, ובעברית. <br /> כהרגלי, הספר בחינם ולהורדה חופשית.<br /> הספר הוא מיקס של נושאים כתבות ופוסטים שלי מהעבר שנערכו לצורת ספר, חלקם יראו איך ההבנה שלי כמאמן משתנה עם השנים.</p><p> לצערי לא הייתה לי היכולת לסדר ולערוך את הכל וחלק מהספר כתוב  איפשהוא בין שפה גבוה לקפיצה בין תכנים שונים, [בסופו של דבר גם אני אדם עסוק ולא סופר במשרה מלאה]</p><p> אבל אני חוזר על ההצהרה המקורית שלי: מאמן צעיר שישב ויקרא בעיון את החומר שבספר הזה, שבאמת ירד לעומק של ההבנה של הדברים ויצפה בסרטונים המצורפים, יזרק ביכולת הדרכה שלו שנות אור קדימה. <br /> אתה יכול להיות המאמן האישי הטוב ביותר במכון שלך או בדרך לשם אם באמת תרד לדקויות של התכנים פה.<br /> ובשביל זה בדיוק הדף הזה הוקם, לעזור למאמנים מתחילים.<br />  אני מסתכל על מאמני כושר אישיים בתור חוד החנית של הרפואה המונעת, בתור שליחות-לא רק מקצוע, והתרומה הקטנה שלי לקהילה היא דרך הדף הזה. <br /> קפצו לחנות הדפסה צלמו וכרכ�� את הספר, יעלה באזור ה100 שקלים. קראו,מרקרו, רשמו לכם נקודות, צפו בסרטונים , קראו שוב ותתנסו. אתם תהיו מאמנים ברמת הבנה ויכולת אחרת כשתסיימו לקרוא אותו.<br /> קישור להורדת הספר בתמונה הראשונה.<br /> בתמונה המצורפת הספר מודפס מסומן בחץ אדום, יחד עם הערמה המפלצתית של מאמרים לקריאה שמונחת לי כרגע על הש��לחן....</p></div>',
       username: 'דברים שמעניינים מאמנים - נקודות ומחשבות בנושאי אימוני כוח ותזונה.',
       'number-of-likes1': '665',
       'number-of-likes2': '',
@@ -191,7 +194,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2997080210319019&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 2555,
       printedDate: 'Thu Nov 07 2019'
@@ -204,7 +207,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2996841100342930&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 860,
       printedDate: 'Thu Nov 07 2019'
@@ -217,7 +220,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2996234823736891&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 193,
       printedDate: 'Thu Nov 07 2019'
@@ -243,7 +246,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2994833760543664&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/73098665_2994833650543675_4813359557885558784_o.jpg?_nc_cat=106&_nc_oc=AQnrx8SUZ-wvMs12zoRb16arcJPQcydhZoCMQ3Ejyyw76nhL5M2ZF-iB2NvCRxmHPIY&_nc_ht=scontent.fsdv3-1.fna&oh=df5865a93fc2d56f06c5c444872a7966&oe=5E44F8AB',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -269,7 +272,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2994308907262816&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 162,
       postLength: 92,
       printedDate: 'Thu Nov 07 2019'
@@ -282,7 +285,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2994132863947087&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1283,
       printedDate: 'Thu Nov 07 2019'
@@ -308,7 +311,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2993308820696158&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1482,
       printedDate: 'Thu Nov 07 2019'
@@ -334,7 +337,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2992523270774713&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/73237563_2992523234108050_4657934806091300864_o.jpg?_nc_cat=106&_nc_oc=AQk4HXT7Uwl_Qc_0zX0Fm-XJzs239V9SC3S2WIMgv-QLxCUDnR9eRzLgYQV-Asx1q-c&_nc_ht=scontent.fsdv3-1.fna&oh=2450cab3f68362bb90cee0f4bd1138a3&oe=5E528CD9',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 207,
       postLength: 1342,
       printedDate: 'Thu Nov 07 2019'
@@ -347,7 +350,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2992364610790579&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/74395419_2992364540790586_7597779451358740480_o.jpg?_nc_cat=107&_nc_oc=AQl6_WsQD08VHFrxGv3EkGFNb3DE47HssNB52aM59sScec4VF2iz58K5mK3W3_eJRW0&_nc_ht=scontent.fsdv3-1.fna&oh=f99df1cca1c9349a8912c95770eb20a9&oe=5E5D808A',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 593,
       printedDate: 'Thu Nov 07 2019'
@@ -360,7 +363,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2992301214130252&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/74392861_2992301144130259_2736588517734875136_o.jpg?_nc_cat=100&_nc_oc=AQm5wq1EnY7ZSBpOkl-d1DtT3fuXKU7L96X-ZeJmEAry7pEDtDET_O50l_irBtei7-Y&_nc_ht=scontent.fsdv3-1.fna&oh=fd77925517e5a7136b06638fd9061913&oe=5E59575B',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -373,7 +376,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2991890230838017&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/75442904_2991890137504693_4830193884065693696_o.jpg?_nc_cat=102&_nc_oc=AQkcJZa1TR8KJ3dHYS_V9XRbKPnISE8nmxZDY2y-krh0bJ0wG7Zxsgy34AcMzeLu82Q&_nc_ht=scontent.fsdv3-1.fna&oh=0493c4cf6d16c0cb6839484338de2f2b&oe=5E46160C',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -386,7 +389,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2991665924193781&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/74887163_2991665877527119_4714774360336891904_n.jpg?_nc_cat=111&_nc_oc=AQnHioco99L2PndC7k9SF7tWxZ_bERbg9RiEQD0JlfbUlVwntyoCm_9Eniw43ZcNgIE&_nc_ht=scontent.fsdv3-1.fna&oh=ea24a9d820d619ca1de2a3863aef7b7d&oe=5E4F4235',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 199,
       postLength: 5477,
       printedDate: 'Thu Nov 07 2019'
@@ -399,7 +402,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2983599455000428&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 691,
       printedDate: 'Thu Nov 07 2019'
@@ -412,7 +415,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2983397598353947&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/73403992_2983397518353955_5609855539212189696_o.jpg?_nc_cat=106&_nc_oc=AQmPcT5P3ByVlJkxATJvD8R6hEnAI1B4Cf4trO6HMCoOZcuJSQwLZZBWIeNrDUGqQPw&_nc_ht=scontent.fsdv3-1.fna&oh=38c91d92f75f1a771253eb9d9db1221f&oe=5E4213A5',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -425,7 +428,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2983094855050888&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1152,
       printedDate: 'Thu Nov 07 2019'
@@ -438,7 +441,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2982896211737419&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/73166634_2982896158404091_2589762281877274624_o.jpg?_nc_cat=108&_nc_oc=AQmEuJ_jRp4ot7Xh8yBigcBTPN7GkYpNkWt6ZcPelJz5JAM74LlgQabMraRVnPl3Pkg&_nc_ht=scontent.fsdv3-1.fna&oh=e371c624b722e55dafc547a6d2b4f9e1&oe=5E46FC73',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 5859,
       printedDate: 'Thu Nov 07 2019'
@@ -451,7 +454,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2981973955162978&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 3077,
       printedDate: 'Thu Nov 07 2019'
@@ -464,7 +467,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2981663871860653&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 899,
       printedDate: 'Thu Nov 07 2019'
@@ -477,7 +480,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2981529981874042&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/74232837_2981529928540714_8325430688933216256_o.jpg?_nc_cat=111&_nc_oc=AQla4qc348ypm9BUoGvMSkzrQml0zpJ25eA3B2Jfip2jZeZceYzx6lxWNxuZmmxaMBc&_nc_ht=scontent.fsdv3-1.fna&oh=84f33fea1e8a35db8cd3a0cf0a99160f&oe=5E614FBE',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -490,7 +493,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2980799268613780&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72840123_2980799188613788_2856606207680970752_o.jpg?_nc_cat=100&_nc_oc=AQkxhaJ_0zfOJjalnYBYXXNIhkeJnvcYgKXPWPSNaG8TVBS3N2QKYpkby0cx4JZdTxQ&_nc_ht=scontent.fsdv3-1.fna&oh=bee87e75a55b6408f3a60b419f0655b0&oe=5E5C7D2E',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 65,
       printedDate: 'Thu Nov 07 2019'
@@ -503,7 +506,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2980416401985400&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72641269_2980416368652070_4202235262702452736_o.jpg?_nc_cat=109&_nc_oc=AQm_zry5dDJFSMHCWBpOCcJQTREmDPDmybtLkMGwbg_Ml0hLz49TEvrMWBqv4Cdrcgc&_nc_ht=scontent.fsdv3-1.fna&oh=d9f7b419d6209643d053211ac3ee921b&oe=5E5571E1',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 89,
       printedDate: 'Thu Nov 07 2019'
@@ -516,7 +519,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2967065066653867&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72791328_2967065023320538_7954648945408344064_o.jpg?_nc_cat=108&_nc_oc=AQlnezWgJ9VXu39QV0nSts532xo5S8swndk1O8PXQtY7WkMgtbttA_w4cju2nfXvd6M&_nc_ht=scontent.fsdv3-1.fna&oh=b0eeddc80e32e65ea75f986f69629e1c&oe=5E5F4DDD',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 5253,
       printedDate: 'Thu Nov 07 2019'
@@ -529,7 +532,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2966948166665557&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72490155_2966948089998898_2270045135406366720_o.jpg?_nc_cat=105&_nc_oc=AQkxJJl-sd5Wqw4M6AZPKM-ZIzf4xtClfEL4IqU9ubnBZczsMyGOzY9-SCqULzFy3xc&_nc_ht=scontent.fsdv3-1.fna&oh=3f529189a58e284c7a9fa62edae03b18&oe=5E62427D',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -542,7 +545,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2966841546676219&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72722008_2966841500009557_3575052020375093248_o.jpg?_nc_cat=111&_nc_oc=AQk8TmwYcQ39x0_nkd-7vqi7a-ZEqHpx4zrs-K4CBBMEkWUqW6RxWoaC0jn7NJMCjA0&_nc_ht=scontent.fsdv3-1.fna&oh=33643d5d2450e8a4258d7b5ccabb42dd&oe=5E3F93D8',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 189,
       printedDate: 'Thu Nov 07 2019'
@@ -555,7 +558,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2966206976739676&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/74186101_2966206933406347_1381118447097741312_o.jpg?_nc_cat=102&_nc_oc=AQlm3OMhENoUTcOq0Qxl5eSNGjX4qHaaXuR0lpzYjfCsJJkzeb-65lJBNyKk-z8ix0o&_nc_ht=scontent.fsdv3-1.fna&oh=63ad48f199c7f2f4ae0a73ad6b97c823&oe=5E492061',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -568,7 +571,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2966073670086340&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1506,
       printedDate: 'Thu Nov 07 2019'
@@ -581,7 +584,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2965928363434204&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72246451_2965928273434213_4070962052611440640_o.jpg?_nc_cat=106&_nc_oc=AQn9yqIdP1iHabbuS6Bk2qL7IugfvWIJxXw9whKgZRS6N0nprkPxUUR6gcHobFQ3hPg&_nc_ht=scontent.fsdv3-1.fna&oh=c37085a6d4e4bd22a6fc4e5c5812db3a&oe=5E6261CB',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -594,7 +597,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2965823926777981&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 2869,
       printedDate: 'Thu Nov 07 2019'
@@ -607,7 +610,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2965729140120793&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72371332_2965729023454138_6738836535333879808_o.jpg?_nc_cat=104&_nc_oc=AQmTyTzQ6VQiPrVBDzsdCcIxo9LzT7VvPUvnGdqNLzzLXNjnZ1LE2iHcGOXJI7HkXyU&_nc_ht=scontent.fsdv3-1.fna&oh=1a1b805594e69d58853416718831dc2c&oe=5E5DA491',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -620,7 +623,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2965444723482568&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72322058_2965444660149241_2797291863214653440_o.jpg?_nc_cat=107&_nc_oc=AQkaFVghyrVvAFHpx5sYBPItHk_broTuVj6BakKV4j4VfbAG-oEMhjqDdBvzNJZrUQk&_nc_ht=scontent.fsdv3-1.fna&oh=d607325d9be3e7c664dbf23beff3a55e&oe=5E61CB2A',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 3102,
       printedDate: 'Thu Nov 07 2019'
@@ -633,7 +636,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2953783941315313&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 2487,
       printedDate: 'Thu Nov 07 2019'
@@ -646,7 +649,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2948572801836427&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 321,
       printedDate: 'Thu Nov 07 2019'
@@ -659,7 +662,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2947819041911803&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/71572212_2947818975245143_169246257200496640_n.jpg?_nc_cat=111&_nc_oc=AQlDeZJ_KA5HZg4CBh2F4gdb_hAOVhadbcbVnm-PkN4eI-lol-UwzpwfluB95oOopDw&_nc_ht=scontent.fsdv3-1.fna&oh=1fe3c0fa7cdf56172e19a983e1364083&oe=5E5BCDDB',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 129,
       postLength: 3142,
       printedDate: 'Thu Nov 07 2019'
@@ -672,7 +675,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2947068585320182&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 291,
       printedDate: 'Thu Nov 07 2019'
@@ -685,7 +688,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2946490378711336&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72099550_2946490245378016_1663377852340371456_o.jpg?_nc_cat=111&_nc_oc=AQkReg41LLBhseXJduRsnXNrqa_hszvxxmvFK1ebtYtGpZQXbjX3_dRjGIKOznGwVwQ&_nc_ht=scontent.fsdv3-1.fna&oh=fcbf8285a83c0a686641cefa5c575aef&oe=5E57F84C',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 135,
       postLength: 1576,
       printedDate: 'Thu Nov 07 2019'
@@ -698,7 +701,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2946121275414913&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 625,
       printedDate: 'Thu Nov 07 2019'
@@ -711,7 +714,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2946049748755399&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/72192141_2946049698755404_1221890394388692992_o.jpg?_nc_cat=100&_nc_oc=AQkVeOGD4ZzTuJNQGzAwzjTseKMkbBAePQkkcurGolIUcqcbnrIiPeTd0rCRWw9S13g&_nc_ht=scontent.fsdv3-1.fna&oh=d1483d82f1b8c5baf84a3a5490267cbb&oe=5E41A593',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 2205,
       printedDate: 'Thu Nov 07 2019'
@@ -724,7 +727,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2945882098772164&id=765857433441319',
       img: 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/71289735_2945882005438840_6331993353038594048_o.jpg?_nc_cat=103&_nc_oc=AQm4vh97J9wsPsC7NjbInTmxPL4JjmAaOvcPHF85lLt_b7EaH2DtEUjqO7eW1FFcnvE&_nc_ht=scontent.fsdv3-1.fna&oh=a0c16f71079984d12ad81bd0dc48fd0b&oe=5E3FAA1A',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 130,
       postLength: 1,
       printedDate: 'Thu Nov 07 2019'
@@ -737,7 +740,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2945660845460956&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 614,
       printedDate: 'Thu Nov 07 2019'
@@ -750,7 +753,7 @@ jb.component('data-resource.table', { /* dataResource.table */
       date: '1573143348',
       url: 'https://m.facebook.com/permalink.php?story_fbid=2938715679488806&id=765857433441319',
       img: '',
-      isShown: true,
+      isShown: false,
       'number-of-likes': 126,
       postLength: 767,
       printedDate: 'Thu Nov 07 2019'
