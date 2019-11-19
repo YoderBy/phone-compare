@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet"href="https://storage.cloud.google.com/ccommerce/tutorial/todomvc.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript">
     startTime = new Date().getTime();
@@ -9,17 +10,14 @@
 <!-- start-jb-scripts -->
 <link rel="stylesheet" type="text/css" href="/dist/css/styles.css"/>
 <script type="text/javascript" src="/dist/jb-react-all.js"></script>
-<script type="text/javascript" src="/dist/d3.js"></script>
-<script type="text/javascript" src="/dist/parsing.js"></script>
-<script type="text/javascript" src="/dist/material.js"></script><link rel="stylesheet" type="text/css" href="/dist/material.css"/>
-<script type="text/javascript" src="/facebook/facebook.js"></script>
+<script type="text/javascript" src="/Todo_App/Todo_App.js"></script>
 
 <!-- end-jb-scripts -->
 </head>
 <body>
   <div id="main"> </div>
   <script>
-    jb.ui.renderWidget({$:'facebook.main'},document.getElementById('main'))
+    jb.ui.renderWidget({$:'Todo_App.main'},document.getElementById('main'))
   </script>
 </body>
 </html>
