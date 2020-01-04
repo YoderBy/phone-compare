@@ -59,7 +59,7 @@ jb.component('facebook.main', { /* facebook.main */
                   }),
                   html({title: 'html', html: '%post-text%', features: css('text-align: right')}),
                   label({title: 'אורך %postLength%', features: css('direction : ltr')}),
-                  label({title: '%url% קישור', features: css('direction : ltr')}),
+                  label({title: '%url% קישור', features: [css('direction : ltr')]}),
                   image({url: '%img%', features: hidden('%isShown%')}),
                   button({
                     title: data.if('%isShown%', 'hide image', 'show image'),
@@ -67,7 +67,7 @@ jb.component('facebook.main', { /* facebook.main */
                     features: watchRef({ref: '%isShown%', allowSelfRefresh: 'yes'})
                   })
                 ],
-                features: css.margin({bottom: '10'})
+                features: css.padding({left: '20', right: '20'})
               })
             ],
             style: table.withHeaders(),
